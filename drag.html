@@ -1,0 +1,168 @@
+<!DOCTYPE html><html><head>
+    <title> Connect Right </title>
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="33x32"
+    href="logo2.jpg"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="logo2.jpg"
+  />
+    
+      <link rel="stylesheet" type="text/css" href="style.css">
+      <meta charset="utf-8">
+
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Oldenburg&family=Squada+One&display=swap" rel="stylesheet">
+  
+    </head>
+    <body>
+      <script>
+        function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+}
+
+
+      </script>
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="index.html">Home</a>
+        <a href="connect.html">Connect Games</a>
+        <a href="flip.html">Proverbs of the month</a>
+        <a href="carousel.html">Learn</a>
+        <a href="drag.html">Drag and Drop Games</a>
+      
+      </div>
+      <div id="main">
+
+        <button class="openbtn" onclick="openNav()">&#9776;</button>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+<script type="text/javascript">
+
+var correctCards = 0;
+$( init );
+
+function init() {
+
+  // Hide the success message
+  $('#successMessage').hide();
+  $('#successMessage').css( {
+    left: '580px',
+    top: '250px',
+    width: 0,
+    height: 0
+  } );
+
+  // Reset the game
+  correctCards = 0;
+  $('#cardPile').html( '' );
+  $('#cardSlots').html( '' );
+
+  // Create the pile of shuffled cards
+  var numbers = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+  var terms = ['Two wrongs dont make a right.', 'The pen is mightier than the sword.', 'When in Rome, do as the Romans.', 'The squeaky wheel gets the grease', 'When the going gets tough, the tough get going', 'No man is an island.', 'Fortune favors the bold.', 'People who live in glass houses should not throw stones.', 'Hope for the best but prepare for the worst.', 'Better late than never' ];
+  
+
+  for ( var i=0; i<10; i++ ) {
+    $('<div>' + terms[i] + '</div>').data( 'number', numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
+      
+      stack: '#cardPile div',
+      cursor: 'move',
+      revert: true
+    } );
+  }
+
+  // Create the card slots
+  var words = [ 'When someone has done something bad to you, trying to get revenge will only make things worse.', 
+  'Trying to convince people with ideas and words is more effective than trying to force people to do what you want.',
+   'Act the way that the people around you are acting. This phrase might come in handy when youre traveling abroad notice that people do things differently than youre used to.', 
+   'You can get better service if you complain about something. If you wait patiently, no ones going to help you.', 
+   'Strong people dont give up when they come across challenges. They just work harder.',
+    'You cant live completely independently. Everyone needs help from other people.', 
+    'People who bravely go after what they want are more successful than people who try to live safely.', 
+    'Dont criticize other people if youre not perfect yourself.', 
+    'Bad things might happen, so be prepared.', 
+    'Its best to do something on time. But if you cant do it on time, do it late.' ];
+  for ( var i=1; i<=10; i++ ) {
+    $('<div>' + words[i-1] + '</div>').data( 'number', i ).appendTo( '#cardSlots' ).droppable( {
+      accept: '#cardPile div',
+      hoverClass: 'hovered',
+      drop: handleCardDrop
+    } );
+  }
+
+}
+
+function handleCardDrop( event, ui ) {
+  var slotNumber = $(this).data( 'number' );
+  var cardNumber = ui.draggable.data( 'number' );
+
+  // If the card was dropped to the correct slot,
+  // change the card colour, position it directly
+  // on top of the slot, and prevent it being dragged
+  // again
+
+  if ( slotNumber == cardNumber ) {
+    ui.draggable.addClass( 'correct' );
+    ui.draggable.draggable( 'disable' );
+    $(this).droppable( 'disable' );
+    ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+    ui.draggable.draggable( 'option', 'revert', false );
+    correctCards++;
+  } 
+  
+  // If all the cards have been placed correctly then display a message
+  // and reset the cards for another go
+
+  if ( correctCards == 10 ) {
+    $('#successMessage').show();
+    $('#successMessage').animate( {
+      left: '380px',
+      top: '200px',
+      width: '400px',
+      height: '100px',
+      opacity: 1
+    } );
+  }
+
+}
+
+</script>
+
+</head>
+<body>
+
+<div class="wideBox">
+  <h1>Matching Game Activity</h1>
+  <h2>Match the Proverbs and their Meanings</h2>
+</div>
+
+<div id="content">
+
+  <div id="cardPile"> </div>
+  <div id="cardSlots"> </div>
+
+  <div id="successMessage">
+    <h2>Congratulations!</h2>
+    <button onclick="init()">Play Again</button>
+  </div>
+
+</div>
+
+
+    </div>
+  
+  </body></html>
